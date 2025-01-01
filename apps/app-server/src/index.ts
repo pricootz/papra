@@ -1,6 +1,5 @@
-import { safelySync } from '@corentinth/chisels';
-import { serve } from '@hono/node-server';
 import process, { env } from 'node:process';
+import { serve } from '@hono/node-server';
 import { setupDatabase } from './modules/app/database/database';
 import { createServer } from './modules/app/server';
 import { parseConfig } from './modules/config/config';
@@ -8,12 +7,7 @@ import { createLogger } from './modules/shared/logger/logger';
 
 const logger = createLogger({ namespace: 'app-server' });
 
-const [config, configError] = safelySync(() => parseConfig({ env }));
-
-if (configError) {
-  logger.error({ error: configError }, `Invalid config: ${configError.message}`);
-  process.exit(1);
-}
+const { config } = parseConfig({ env });
 
 const { db } = setupDatabase(config.database);
 

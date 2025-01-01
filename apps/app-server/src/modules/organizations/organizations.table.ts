@@ -23,5 +23,5 @@ export const organizationUserTable = sqliteTable('organization_users', {
 
   roleId: text('role_id')
     .notNull()
-    .default('member')
+    .default('member'),
 });

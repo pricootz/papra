@@ -1,6 +1,9 @@
 import type { ConfigDefinition } from 'figue';
+import process from 'node:process';
+import { safelySync } from '@corentinth/chisels';
 import { defineConfig } from 'figue';
 import { z } from 'zod';
+import { createLogger } from '../shared/logger/logger';
 
 export const configDefinition = {
   env: {
@@ -151,11 +154,20 @@ export const configDefinition = {
   },
 } as const satisfies ConfigDefinition;
 
+const logger = createLogger({ namespace: 'config' });
+
 export function parseConfig({ env }: { env?: Record<string, string | undefined> } = {}) {
-  const { config } = defineConfig(
+  const [configResult, configError] = safelySync(() => defineConfig(
     configDefinition,
     { envSource: env },
-  );
+  ));
 
-  return config;
+  if (configError) {
+    logger.error({ error: configError }, `Invalid config: ${configError.message}`);
+    process.exit(1);
+  }
+
+  const { config } = configResult;
+
+  return { config };
 }

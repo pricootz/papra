@@ -1,4 +1,4 @@
-import { Context } from "../app/server.types";
+import type { Context } from '../app/server.types';
 
 export function getConfig({ context }: { context: Context }) {
   const config = context.get('config');

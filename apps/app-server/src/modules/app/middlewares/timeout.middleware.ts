@@ -1,7 +1,7 @@
 import type { Context } from '../server.types';
 import { createMiddleware } from 'hono/factory';
-import { createError } from '../../shared/errors/errors';
 import { getConfig } from '../../config/config.models';
+import { createError } from '../../shared/errors/errors';
 
 export const timeoutMiddleware = createMiddleware(async (context: Context, next) => {
   const { config } = getConfig({ context });

@@ -10,7 +10,7 @@ export const usersTable = sqliteTable(
     email: text('email').notNull().unique(),
     fullName: text('full_name').notNull(),
   },
-  (table) => [
-    index('email_index').on(table.email)
+  table => [
+    index('email_index').on(table.email),
   ],
 );

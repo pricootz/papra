@@ -1,7 +1,7 @@
+import type { Context } from '../server.types';
 import { cors } from 'hono/cors';
 import { first } from 'lodash-es';
 import { getConfig } from '../../config/config.models';
-import type { Context } from '../server.types';
 
 export const corsMiddleware = cors({
   origin: (origin, context: Context) => {
