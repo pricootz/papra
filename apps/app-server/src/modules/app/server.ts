@@ -9,9 +9,10 @@ import { corsMiddleware } from './middlewares/cors.middleware';
 import { registerErrorMiddleware } from './middlewares/errors.middleware';
 import { loggerMiddleware } from './middlewares/logger.middleware';
 import { timeoutMiddleware } from './middlewares/timeout.middleware';
-import { registerRoutes } from './routes';
+import { registerRoutes } from './server.routes';
+import { parseConfig } from '../config/config';
 
-export function createServer({ config, db }: { config: Config; db: Database }) {
+export function createServer({ config = parseConfig().config, db }: { config?: Config; db: Database }) {
   const app = new Hono<ServerInstanceGenerics>({ strict: true });
 
   app.use(loggerMiddleware);

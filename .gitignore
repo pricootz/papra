@@ -35,3 +35,5 @@ cache
 *.db-shm
 *.db-wal
 *.sqlite
+
+local-documents

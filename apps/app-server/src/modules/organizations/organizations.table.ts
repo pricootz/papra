@@ -1,15 +1,16 @@
 import { sqliteTable, text } from 'drizzle-orm/sqlite-core';
 import { createPrimaryKeyField, createTimestampColumns } from '../shared/db/columns.helpers';
 import { usersTable } from '../users/users.table';
+import { ORGANIZATION_ROLE_MEMBER } from './organizations.constants';
 
-export const organizationTable = sqliteTable('organizations', {
+export const organizationsTable = sqliteTable('organizations', {
   ...createPrimaryKeyField({ prefix: 'org' }),
   ...createTimestampColumns(),
 
   name: text('name').notNull(),
 });
 
-export const organizationUserTable = sqliteTable('organization_users', {
+export const organizationUsersTable = sqliteTable('organization_users', {
   ...createPrimaryKeyField({ prefix: 'org_usr' }),
   ...createTimestampColumns(),
 
@@ -19,9 +20,9 @@ export const organizationUserTable = sqliteTable('organization_users', {
 
   organizationId: text('organization_id')
     .notNull()
-    .references(() => organizationTable.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
+    .references(() => organizationsTable.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
 
-  roleId: text('role_id')
+  role: text('role')
     .notNull()
-    .default('member'),
+    .default(ORGANIZATION_ROLE_MEMBER),
 });

@@ -8,7 +8,7 @@ export const usersTable = sqliteTable(
     ...createTimestampColumns(),
 
     email: text('email').notNull().unique(),
-    fullName: text('full_name').notNull(),
+    fullName: text('full_name'),
   },
   table => [
     index('email_index').on(table.email),

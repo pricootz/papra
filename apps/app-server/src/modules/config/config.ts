@@ -4,6 +4,7 @@ import { safelySync } from '@corentinth/chisels';
 import { defineConfig } from 'figue';
 import { z } from 'zod';
 import { createLogger } from '../shared/logger/logger';
+import { documentStorageConfig } from './fragments/document-storage.config';
 
 export const configDefinition = {
   env: {
@@ -31,7 +32,7 @@ export const configDefinition = {
         z.string(),
         z.array(z.string()),
       ]).transform(value => (typeof value === 'string' ? value.split(',') : value)),
-      default: [],
+      default: ['http://localhost:3000'],
       env: 'SERVER_CORS_ORIGINS',
     },
   },
@@ -96,7 +97,14 @@ export const configDefinition = {
       env: 'CLIENT_OAUTH_REDIRECT_URL',
     },
   },
+  documentsStorage: documentStorageConfig,
   auth: {
+    isRegistrationEnabled: {
+      doc: 'Whether registration is enabled',
+      schema: z.boolean(),
+      default: true,
+      env: 'AUTH_IS_REGISTRATION_ENABLED',
+    },
     jwtSecret: {
       doc: 'The secret to use for JWT',
       schema: z.string(),

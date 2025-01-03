@@ -2,24 +2,32 @@
   "name": "@papra/app-server",
   "type": "module",
   "version": "1.0.0",
-
   "packageManager": "pnpm@9.11.0",
   "description": "",
   "author": "",
   "keywords": [],
   "scripts": {
-    "dev": "tsx -r dotenv/config --watch src/index.ts",
+    "dev": "tsx watch --env-file=.env src/index.ts",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "test": "vitest run",
     "test:watch": "vitest watch",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "migrate:up": "drizzle-kit migrate",
+    "migrate:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "clean:db": "rm db.sqlite",
+    "clean:storage": "rm -rf local-documents",
+    "clean:all": "pnpm clean:db && pnpm clean:storage",
+    "dev:reset": "pnpm clean:all && pnpm migrate:push"
   },
   "dependencies": {
     "@corentinth/chisels": "^1.1.0",
     "@hono/node-server": "^1.13.7",
+    "@hono/oauth-providers": "^0.6.2",
     "@libsql/client": "^0.14.0",
     "@paralleldrive/cuid2": "^2.2.2",
+    "date-fns": "^4.1.0",
     "drizzle-orm": "^0.38.3",
     "figue": "^2.1.0",
     "hono": "^4.6.15",
@@ -27,14 +35,13 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^3.12.1",
+    "@antfu/eslint-config": "catalog:",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^22.10.2",
-    "dotenv": "^16.4.7",
     "drizzle-kit": "^0.30.1",
-    "eslint": "^9.17.0",
+    "eslint": "catalog:",
     "tsx": "^4.19.2",
-    "typescript": "^5.7.2",
-    "vitest": "^2.1.8"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

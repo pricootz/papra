@@ -6,7 +6,7 @@ export default defineConfig({
   dialect: 'turso',
   out: './migrations',
   dbCredentials: {
-    url: String(env.DATABASE_URL),
+    url: env.DATABASE_URL ?? 'file:./db.sqlite',
     authToken: env.DATABASE_AUTH_TOKEN,
   },
 });
