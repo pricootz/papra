@@ -101,7 +101,12 @@ export const configDefinition = {
   auth: {
     isRegistrationEnabled: {
       doc: 'Whether registration is enabled',
-      schema: z.boolean(),
+      schema: z
+        .string()
+        .trim()
+        .toLowerCase()
+        .transform(x => x === 'true')
+        .pipe(z.boolean()),
       default: true,
       env: 'AUTH_IS_REGISTRATION_ENABLED',
     },
