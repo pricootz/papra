@@ -24,20 +24,20 @@ export const fsStorageDriverFactory = defineStorageDriver(async ({ config }) => 
 
   return {
     name: FS_STORAGE_DRIVER_NAME,
-    saveFile: async ({ fileStream, fileName }) => {
-      // Save file to disk
-      const storageKey = `${root}/${fileName}`;
+    saveFile: async ({ file, organizationId }) => {
+      const storageKey = `${organizationId}/${file.name}`;
+      const storagePath = `${root}/${storageKey}`;
 
-      const fileExists = await checkFileExists({ path: storageKey });
+      const fileExists = await checkFileExists({ path: storagePath });
 
       if (fileExists) {
         throw createFileAlreadyExistsError();
       }
 
-      await ensureDirectoryExists({ path: storageKey });
+      await ensureDirectoryExists({ path: storagePath });
 
-      const writeStream = fs.createWriteStream(storageKey);
-      stream.Readable.fromWeb(fileStream).pipe(writeStream);
+      const writeStream = fs.createWriteStream(storagePath);
+      stream.Readable.fromWeb(file.stream()).pipe(writeStream);
 
       return new Promise((resolve, reject) => {
         writeStream.on('finish', () => {

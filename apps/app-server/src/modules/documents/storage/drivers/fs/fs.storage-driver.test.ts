@@ -2,7 +2,6 @@ import type { Config } from '../../../../config/config.types';
 import fs from 'node:fs';
 import { tmpdir } from 'node:os';
 import path, { join } from 'node:path';
-import stream from 'node:stream';
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 import { fsStorageDriverFactory } from './fs.storage-driver';
 import { createFileAlreadyExistsError } from './fs.storage-driver.errors';
@@ -32,16 +31,16 @@ describe('storage driver', () => {
         } as Config;
 
         const fsStorageDriver = await fsStorageDriverFactory({ config });
-        const fileStream = fs.createReadStream(path.join(__dirname, 'fixtures', 'text-file.txt'));
 
         const { storageKey } = await fsStorageDriver.saveFile({
-          fileStream: stream.Readable.toWeb(fileStream),
-          fileName: 'text-file.txt',
+          file: new File(['lorem ipsum'], 'text-file.txt', { type: 'text/plain' }),
+          organizationId: 'org_1',
         });
 
-        expect(storageKey).to.eql(`${tmpDirectory}/text-file.txt`);
+        expect(storageKey).to.eql(`org_1/text-file.txt`);
+        const storagePath = path.join(tmpDirectory, storageKey);
 
-        const fileExists = await fs.promises.access(storageKey, fs.constants.F_OK).then(() => true).catch(() => false);
+        const fileExists = await fs.promises.access(storagePath, fs.constants.F_OK).then(() => true).catch(() => false);
 
         expect(fileExists).to.eql(true);
       });
@@ -58,17 +57,16 @@ describe('storage driver', () => {
         } as Config;
 
         const fsStorageDriver = await fsStorageDriverFactory({ config });
-        const fileStream = fs.createReadStream(path.join(__dirname, 'fixtures', 'text-file.txt'));
 
         await fsStorageDriver.saveFile({
-          fileStream: stream.Readable.toWeb(fileStream),
-          fileName: 'text-file.txt',
+          file: new File(['lorem ipsum'], 'text-file.txt', { type: 'text/plain' }),
+          organizationId: 'org_1',
         });
 
         await expect(
           fsStorageDriver.saveFile({
-            fileStream: stream.Readable.toWeb(fileStream),
-            fileName: 'text-file.txt',
+            file: new File(['lorem ipsum'], 'text-file.txt', { type: 'text/plain' }),
+            organizationId: 'org_1',
           }),
         ).rejects.toThrow(createFileAlreadyExistsError());
       });

@@ -107,7 +107,7 @@ export const configDefinition = {
         .toLowerCase()
         .transform(x => x === 'true')
         .pipe(z.boolean()),
-      default: true,
+      default: 'true',
       env: 'AUTH_IS_REGISTRATION_ENABLED',
     },
     jwtSecret: {

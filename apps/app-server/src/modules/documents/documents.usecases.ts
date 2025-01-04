@@ -14,16 +14,16 @@ export async function createDocument({
   documentsRepository: DocumentsRepository;
   documentsStorageService: DocumentStorageService;
 }) {
+  const { storageKey } = await documentsStorageService.saveFile({
+    file,
+    organizationId,
+  });
+
   const {
     name: fileName,
     size,
     type: mimeType,
   } = file;
-
-  const { storageKey } = await documentsStorageService.saveFile({
-    fileStream: file.stream(),
-    fileName,
-  });
 
   const { document } = await documentsRepository.saveOrganizationDocument({
     name: fileName,

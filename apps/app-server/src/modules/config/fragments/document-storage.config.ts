@@ -1,6 +1,7 @@
 import type { ConfigDefinition } from 'figue';
 import { z } from 'zod';
 import { FS_STORAGE_DRIVER_NAME } from '../../documents/storage/drivers/fs/fs.storage-driver';
+import { S3_STORAGE_DRIVER_NAME } from '../../documents/storage/drivers/s3/s3.storage-driver';
 
 export const documentStorageConfig = {
   maxUploadSize: {
@@ -11,7 +12,7 @@ export const documentStorageConfig = {
   },
   driver: {
     doc: 'The driver to use for document storage',
-    schema: z.enum([FS_STORAGE_DRIVER_NAME]),
+    schema: z.enum([FS_STORAGE_DRIVER_NAME, S3_STORAGE_DRIVER_NAME]),
     default: FS_STORAGE_DRIVER_NAME,
     env: 'DOCUMENT_STORAGE_DRIVER',
   },
@@ -22,6 +23,38 @@ export const documentStorageConfig = {
         schema: z.string(),
         default: './local-documents',
         env: 'DOCUMENT_STORAGE_FILESYSTEM_ROOT',
+      },
+    },
+    s3: {
+      accessKeyId: {
+        doc: 'The AWS access key ID for S3',
+        schema: z.string(),
+        default: '',
+        env: 'DOCUMENT_STORAGE_S3_ACCESS_KEY_ID',
+      },
+      secretAccessKey: {
+        doc: 'The AWS secret access key for S3',
+        schema: z.string(),
+        default: '',
+        env: 'DOCUMENT_STORAGE_S3_SECRET_ACCESS_KEY',
+      },
+      bucketName: {
+        doc: 'The S3 bucket name',
+        schema: z.string(),
+        default: '',
+        env: 'DOCUMENT_STORAGE_S3_BUCKET_NAME',
+      },
+      region: {
+        doc: 'The AWS region for S3',
+        schema: z.string(),
+        default: 'auto',
+        env: 'DOCUMENT_STORAGE_S3_REGION',
+      },
+      endpoint: {
+        doc: 'The S3 endpoint',
+        schema: z.string().optional(),
+        default: undefined,
+        env: 'DOCUMENT_STORAGE_S3_ENDPOINT',
       },
     },
   },

@@ -3,9 +3,11 @@ import type { StorageDriver } from './drivers/drivers.models';
 import { injectArguments } from '@corentinth/chisels';
 import { createError } from '../../shared/errors/errors';
 import { FS_STORAGE_DRIVER_NAME, fsStorageDriverFactory } from './drivers/fs/fs.storage-driver';
+import { S3_STORAGE_DRIVER_NAME, s3StorageDriverFactory } from './drivers/s3/s3.storage-driver';
 
 const storageDriverFactories = {
   [FS_STORAGE_DRIVER_NAME]: fsStorageDriverFactory,
+  [S3_STORAGE_DRIVER_NAME]: s3StorageDriverFactory,
 };
 
 export type DocumentStorageService = Awaited<ReturnType<typeof createDocumentStorageService>>;
@@ -33,6 +35,14 @@ export async function createDocumentStorageService({ config }: { config: Config 
   });
 }
 
-async function saveFile({ storageDriver, fileStream, fileName }: { storageDriver: StorageDriver; fileStream: ReadableStream; fileName: string }) {
-  return storageDriver.saveFile({ fileStream, fileName });
+async function saveFile({
+  file,
+  organizationId,
+  storageDriver,
+}: {
+  file: File;
+  organizationId: string;
+  storageDriver: StorageDriver;
+}) {
+  return storageDriver.saveFile({ file, organizationId });
 }
