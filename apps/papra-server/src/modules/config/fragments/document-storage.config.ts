@@ -1,6 +1,7 @@
 import type { ConfigDefinition } from 'figue';
 import { z } from 'zod';
 import { FS_STORAGE_DRIVER_NAME } from '../../documents/storage/drivers/fs/fs.storage-driver';
+import { IN_MEMORY_STORAGE_DRIVER_NAME } from '../../documents/storage/drivers/memory/memory.storage-driver';
 import { S3_STORAGE_DRIVER_NAME } from '../../documents/storage/drivers/s3/s3.storage-driver';
 
 export const documentStorageConfig = {
@@ -12,7 +13,7 @@ export const documentStorageConfig = {
   },
   driver: {
     doc: 'The driver to use for document storage',
-    schema: z.enum([FS_STORAGE_DRIVER_NAME, S3_STORAGE_DRIVER_NAME]),
+    schema: z.enum([FS_STORAGE_DRIVER_NAME, S3_STORAGE_DRIVER_NAME, IN_MEMORY_STORAGE_DRIVER_NAME]),
     default: FS_STORAGE_DRIVER_NAME,
     env: 'DOCUMENT_STORAGE_DRIVER',
   },

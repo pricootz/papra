@@ -19,9 +19,7 @@ export const s3StorageDriverFactory = defineStorageDriver(async ({ config }) => 
 
   return {
     name: S3_STORAGE_DRIVER_NAME,
-    saveFile: async ({ file, organizationId }) => {
-      const storageKey = `${organizationId}/${file.name}`;
-
+    saveFile: async ({ file, storageKey }) => {
       const upload = new Upload({
         client: s3Client,
         params: {

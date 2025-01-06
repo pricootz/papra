@@ -5,7 +5,7 @@ export type StorageDriver = {
   name: string;
   saveFile: (args: {
     file: File;
-    organizationId: string;
+    storageKey: string;
   }) => Promise<{ storageKey: string }>;
 
   getFileStream: (args: { storageKey: string }) => Promise<{

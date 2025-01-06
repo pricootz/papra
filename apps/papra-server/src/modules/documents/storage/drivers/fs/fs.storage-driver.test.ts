@@ -34,7 +34,7 @@ describe('storage driver', () => {
 
         const { storageKey } = await fsStorageDriver.saveFile({
           file: new File(['lorem ipsum'], 'text-file.txt', { type: 'text/plain' }),
-          organizationId: 'org_1',
+          storageKey: 'org_1/text-file.txt',
         });
 
         expect(storageKey).to.eql(`org_1/text-file.txt`);
@@ -60,13 +60,13 @@ describe('storage driver', () => {
 
         await fsStorageDriver.saveFile({
           file: new File(['lorem ipsum'], 'text-file.txt', { type: 'text/plain' }),
-          organizationId: 'org_1',
+          storageKey: 'org_1/text-file.txt',
         });
 
         await expect(
           fsStorageDriver.saveFile({
             file: new File(['lorem ipsum'], 'text-file.txt', { type: 'text/plain' }),
-            organizationId: 'org_1',
+            storageKey: 'org_1/text-file.txt',
           }),
         ).rejects.toThrow(createFileAlreadyExistsError());
       });

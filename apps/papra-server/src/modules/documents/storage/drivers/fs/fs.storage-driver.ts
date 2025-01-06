@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-import { dirname } from 'node:path';
+import { dirname, join } from 'node:path';
 import stream from 'node:stream';
 import { defineStorageDriver } from '../drivers.models';
 import { createFileAlreadyExistsError } from './fs.storage-driver.errors';
@@ -24,9 +24,8 @@ export const fsStorageDriverFactory = defineStorageDriver(async ({ config }) => 
 
   return {
     name: FS_STORAGE_DRIVER_NAME,
-    saveFile: async ({ file, organizationId }) => {
-      const storageKey = `${organizationId}/${file.name}`;
-      const storagePath = `${root}/${storageKey}`;
+    saveFile: async ({ file, storageKey }) => {
+      const storagePath = join(root, storageKey);
 
       const fileExists = await checkFileExists({ path: storagePath });
 
@@ -50,7 +49,7 @@ export const fsStorageDriverFactory = defineStorageDriver(async ({ config }) => 
       });
     },
     getFileStream: async ({ storageKey }) => {
-      const storagePath = `${root}/${storageKey}`;
+      const storagePath = join(root, storageKey);
 
       const fileExists = await checkFileExists({ path: storagePath });
 
@@ -59,10 +58,9 @@ export const fsStorageDriverFactory = defineStorageDriver(async ({ config }) => 
       }
 
       const readStream = fs.createReadStream(storagePath);
+      const fileStream = stream.Readable.toWeb(readStream);
 
-      return {
-        fileStream: stream.Readable.toWeb(readStream),
-      };
+      return { fileStream };
     },
   };
 });

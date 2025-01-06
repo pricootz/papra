@@ -2,9 +2,10 @@ import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 import { organizationsTable } from '../organizations/organizations.table';
 import { createPrimaryKeyField, createSoftDeleteColumns, createTimestampColumns } from '../shared/db/columns.helpers';
 import { usersTable } from '../users/users.table';
+import { generateDocumentId } from './documents.models';
 
 export const documentsTable = sqliteTable('documents', {
-  ...createPrimaryKeyField({ prefix: 'doc' }),
+  ...createPrimaryKeyField({ idGenerator: generateDocumentId }),
   ...createTimestampColumns(),
   ...createSoftDeleteColumns(),
 

@@ -91,17 +91,17 @@ async function softDeleteDocument({ documentId, userId, db, now = new Date() }: 
 }
 
 async function searchOrganizationDocuments({ organizationId, searchQuery, pageIndex, pageSize, db }: { organizationId: string; searchQuery: string; pageIndex: number; pageSize: number; db: Database }) {
-  // const doubleQuotedSearchQuery = `"${searchQuery.replace(/"/g, '')}"`;
+  // TODO: extract this logic to a tested function
   // when searchquery is a single word, we append a wildcard to it to make it a prefix search
   const cleanedSearchQuery = searchQuery.replace(/"/g, '').replace(/\*/g, '').trim();
-  const formatedSearchQuery = cleanedSearchQuery.includes(' ') ? cleanedSearchQuery : `${cleanedSearchQuery}*`;
+  const formattedSearchQuery = cleanedSearchQuery.includes(' ') ? cleanedSearchQuery : `${cleanedSearchQuery}*`;
 
   const result = await db.run(sql`
     SELECT * FROM ${documentsTable}
     JOIN documents_fts ON documents_fts.id = ${documentsTable.id}
     WHERE ${documentsTable.organizationId} = ${organizationId}
           AND ${documentsTable.isDeleted} = 0
-          AND documents_fts MATCH ${formatedSearchQuery}
+          AND documents_fts MATCH ${formattedSearchQuery}
     ORDER BY rank
     LIMIT ${pageSize}
     OFFSET ${pageIndex * pageSize}

@@ -3,11 +3,14 @@ import { generateId } from '../random';
 
 export { createCreatedAtField, createPrimaryKeyField, createSoftDeleteColumns, createTimestampColumns, createUpdatedAtField };
 
-function createPrimaryKeyField({ prefix }: { prefix?: string } = {}) {
+function createPrimaryKeyField({
+  prefix,
+  idGenerator = () => generateId({ prefix }),
+}: { prefix?: string; idGenerator?: () => string } = {}) {
   return {
     id: text('id')
       .primaryKey()
-      .$default(() => generateId({ prefix })),
+      .$default(idGenerator),
   };
 }
 

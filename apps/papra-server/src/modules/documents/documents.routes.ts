@@ -81,6 +81,7 @@ function setupCreateDocumentRoute({ app }: { app: ServerInstance }) {
         organizationId,
         documentsRepository,
         documentsStorageService,
+        
       });
 
       return context.json({
