@@ -2,6 +2,8 @@
 
 `@papra/lecture` is a robust and lightweight library for extracting text content from various file formats. Whether you're processing Document for indexing or for LLM readability, this library simplifies the task of reading text content programmatically.
 
+This lib is used in the [Papra](https://papra.app) project to extract text from various file formats.
+
 ## Features
 
 - **Wide Format Support**: Extract text from PDFs, plain text files, YAML, Markdown, CSV, and all `text/*` MIME types.
