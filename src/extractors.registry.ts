@@ -2,7 +2,7 @@ import type { ExtractorDefinition } from './extractors.models';
 import { pdfExtractorDefinition } from './extractors/pdf.extractor';
 import { txtExtractorDefinition } from './extractors/txt.extractor';
 
-const extractorDefinitions: ExtractorDefinition[] = [
+export const extractorDefinitions: ExtractorDefinition[] = [
   pdfExtractorDefinition,
   txtExtractorDefinition,
 ];
