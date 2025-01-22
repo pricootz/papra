@@ -1,7 +1,7 @@
 import { defineTextExtractor } from '../extractors.models';
 
 export const txtExtractorDefinition = defineTextExtractor({
-  name: 'pdf',
+  name: 'text',
   mimeTypes: [
     'text/*',
     'application/json',
