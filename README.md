@@ -31,31 +31,20 @@ You can import the library using ES Modules or CommonJS syntax:
 
 ```javascript
 // ES Modules
-import { extractText, extractTextFromBlob } from '@papra/lecture';
-```
+import { extractText } from '@papra/lecture';
+// or CommonJS
+const { extractText } = require('@papra/lecture');
 
-```javascript
-// CommonJS
-const { extractText, extractTextFromBlob } = require('@papra/lecture');
+const { textContent } = await extractText({arrayBuffer: file, mimeType: 'application/pdf'});
+
+console.log('Extracted Text:', textContent);
 ```
 
 ### Functions
 
 #### `extractText`
 
-Extracts text from a file's binary data using its MIME type.
-
-**Parameters**:
-
-- `arrayBuffer` (`ArrayBuffer`): The binary content of the file.
-- `mimeType` (`string`): The MIME type of the file.
-
-**Returns**:
-A promise that resolves to an object with the following properties:
-
-- `extractorName` (`string | undefined`): The name of the extractor used.
-- `textContent` (`string | undefined`): The extracted text content, if available.
-- `error` (`Error | undefined`): An error object, if an issue occurred during extraction.
+Extracts text from an arrayBuffer using its MIME type.
 
 **Example**:
 
@@ -63,38 +52,33 @@ A promise that resolves to an object with the following properties:
 const file = await fetch('example.pdf').then(res => res.arrayBuffer());
 const mimeType = 'application/pdf';
 
-const result = await extractText({ arrayBuffer: file, mimeType });
+const { textContent } = await extractText({ arrayBuffer: file, mimeType });
 
-if (result.textContent) {
-  console.log('Extracted Text:', result.textContent);
-} else {
-  console.error('Error:', result.error);
-}
+console.log('Extracted Text:', textContent);
 ```
 
 #### `extractTextFromBlob`
 
 Extracts text from a `Blob` object (e.g., files or data retrieved from APIs).
 
-**Parameters**:
+```javascript
+const blob = new Blob(['Hello, World!'], { type: 'text/plain' });
 
-- `blob` (`Blob`): A Blob representing the file content.
+const { textContent } = await extractTextFromBlob({ blob });
 
-**Returns**:
-A promise that resolves with the same structure as `extractText`.
+console.log('Extracted Text:', textContent);
+```
 
-**Example**:
+#### `extractTextFromFile`
+
+Extracts text from a file using its MIME type.
 
 ```javascript
-const inputFile = document.querySelector('#file-input').files[0]; // HTML File Input
+const file = document.querySelector('#file-input').files[0]; // HTML File Input
 
-const result = await extractTextFromBlob(inputFile);
+const { textContent } = await extractTextFromFile({ file });
 
-if (result.textContent) {
-  console.log('Extracted Text:', result.textContent);
-} else {
-  console.error('Error:', result.error);
-}
+console.log('Extracted Text:', textContent);
 ```
 
 ## Supported File Formats

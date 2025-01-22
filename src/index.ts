@@ -1,1 +1,5 @@
-export { extractText } from './extractors.usecases';
+export {
+  extractText,
+  extractTextFromBlob,
+  extractTextFromFile,
+} from './extractors.usecases';

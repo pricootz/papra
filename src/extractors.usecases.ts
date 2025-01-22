@@ -30,9 +30,13 @@ export async function extractText({ arrayBuffer, mimeType }: { arrayBuffer: Arra
   }
 }
 
-export async function extractTextFromBlob(blob: Blob) {
+export async function extractTextFromBlob({ blob }: { blob: Blob }) {
   const arrayBuffer = await blob.arrayBuffer();
   const mimeType = blob.type;
 
   return extractText({ arrayBuffer, mimeType });
+}
+
+export async function extractTextFromFile({ file }: { file: File }) {
+  return extractTextFromBlob({ blob: file });
 }
