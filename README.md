@@ -11,6 +11,22 @@ This lib is used in the [Papra](https://papra.app) project to extract text from 
 - **Extensible and Modular**: Built with future compatibility in mind. Support for more file formats is on the way.
 - **Error Handling**: Provides detailed error information when extraction fails.
 
+## Supported File Formats
+
+Currently, `@papra/lecture` supports the following file formats:
+
+- **PDF**
+- **Plain Text** (e.g., `.txt`)
+- **YAML** (e.g., `.yaml`, `.yml`)
+- **Markdown** (e.g., `.md`)
+- **CSV**
+- All `text/*` MIME types
+- **Images OCR** (e.g., `.jpg`, `.png`, `.gif`)
+- Coming soon: **Microsoft Office Documents** (e.g., `.docx`, `.xlsx`, `.pptx`)
+- Coming soon: **eBooks** (e.g., `.epub`, `.mobi`)
+
+We are actively working on adding support for more file formats. Stay tuned for updates!
+
 ## Installation
 
 To install the package, use npm or yarn:
@@ -80,24 +96,6 @@ const { textContent } = await extractTextFromFile({ file });
 
 console.log('Extracted Text:', textContent);
 ```
-
-## Supported File Formats
-
-Currently, `@papra/lecture` supports the following file formats:
-
-- **PDF**
-- **Plain Text** (e.g., `.txt`)
-- **YAML** (e.g., `.yaml`, `.yml`)
-- **Markdown** (e.g., `.md`)
-- **CSV**
-- All `text/*` MIME types
-- Coming soon: **Microsoft Office Documents** (e.g., `.docx`, `.xlsx`, `.pptx`)
-- Coming soon: **eBooks** (e.g., `.epub`, `.mobi`)
-- Coming soon: **Images OCR** (e.g., `.jpg`, `.png`)
-
-### Coming Soon
-
-We are actively working on adding support for more file formats. Stay tuned for updates!
 
 ## Contributing
 
