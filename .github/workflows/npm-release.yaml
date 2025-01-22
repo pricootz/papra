@@ -4,7 +4,7 @@ on:
   push:
     tags:
       - 'v*.*.*'
-      
+
 permissions:
   contents: read
   packages: write
@@ -23,7 +23,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'pnpm'
+          cache: pnpm
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
