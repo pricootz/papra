@@ -1,10 +1,12 @@
 import type { ExtractorDefinition } from './extractors.models';
+import { imageExtractorDefinition } from './extractors/img.extractor';
 import { pdfExtractorDefinition } from './extractors/pdf.extractor';
 import { txtExtractorDefinition } from './extractors/txt.extractor';
 
 export const extractorDefinitions: ExtractorDefinition[] = [
   pdfExtractorDefinition,
   txtExtractorDefinition,
+  imageExtractorDefinition,
 ];
 
 export function getExtractor({
