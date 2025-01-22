@@ -13,7 +13,7 @@
   "bugs": {
     "url": "https://github.com/papra-hq/lecture/issues"
   },
-  "keywords": [],
+  "keywords": ["file", "text", "extract", "lecture", "document", "content"],
   "sideEffects": false,
   "exports": {
     ".": {
