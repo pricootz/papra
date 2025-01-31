@@ -8,6 +8,7 @@ describe('config models', () => {
         - auth.isEmailVerificationRequired Whether email verification is required
         - auth.isPasswordResetEnabled Whether password reset is enabled
         - auth.isRegistrationEnabled Whether registration is enabled
+        - auth.showLegalLinksOnAuthPage Whether to show Papra legal links on the auth pages
         - auth.providers.*.isEnabled Wether a oauth provider is enabled
         - documents.deletedExpirationDelayInDays The delay in days before a deleted document is permanently deleted
         - intakeEmails.isEnabled Whether intake emails are enabled
@@ -21,6 +22,7 @@ describe('config models', () => {
           isEmailVerificationRequired: true,
           isPasswordResetEnabled: true,
           isRegistrationEnabled: true,
+          showLegalLinksOnAuthPage: true,
           providers: {
             github: {
               isEnabled: true,
@@ -45,6 +47,7 @@ describe('config models', () => {
             isEmailVerificationRequired: true,
             isPasswordResetEnabled: true,
             isRegistrationEnabled: true,
+            showLegalLinksOnAuthPage: true,
             providers: {
               github: {
                 isEnabled: true,

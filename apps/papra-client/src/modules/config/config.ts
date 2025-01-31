@@ -8,6 +8,7 @@ export const buildTimeConfig = {
     isRegistrationEnabled: import.meta.env.VITE_AUTH_IS_REGISTRATION_ENABLED !== 'false',
     isPasswordResetEnabled: import.meta.env.VITE_AUTH_IS_PASSWORD_RESET_ENABLED !== 'false',
     isEmailVerificationRequired: import.meta.env.VITE_AUTH_IS_EMAIL_VERIFICATION_REQUIRED !== 'false',
+    showLegalLinksOnAuthPage: import.meta.env.VITE_AUTH_SHOW_LEGAL_LINKS_ON_AUTH_PAGE === 'true',
     providers: {
       github: {
         isEnabled: import.meta.env.VITE_AUTH_PROVIDERS_GITHUB_IS_ENABLED === 'true',

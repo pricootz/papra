@@ -18,6 +18,7 @@ export function getPublicConfig({ config }: { config: Config }) {
     'auth.isEmailVerificationRequired',
     'auth.isPasswordResetEnabled',
     'auth.isRegistrationEnabled',
+    'auth.showLegalLinksOnAuthPage',
     'auth.providers.github.isEnabled',
     'auth.providers.google.isEnabled',
     'documents.deletedDocumentsRetentionDays',

@@ -38,8 +38,19 @@ export const authConfig = {
       .toLowerCase()
       .transform(x => x === 'true')
       .pipe(z.boolean()),
-    default: 'true',
+    default: 'false',
     env: 'AUTH_IS_EMAIL_VERIFICATION_REQUIRED',
+  },
+  showLegalLinksOnAuthPage: {
+    doc: 'Whether to show Papra legal links on the auth pages (terms of service, privacy policy), useless for self-hosted instances',
+    schema: z
+      .string()
+      .trim()
+      .toLowerCase()
+      .transform(x => x === 'true')
+      .pipe(z.boolean()),
+    default: 'false',
+    env: 'AUTH_SHOW_LEGAL_LINKS',
   },
   providers: {
     github: {

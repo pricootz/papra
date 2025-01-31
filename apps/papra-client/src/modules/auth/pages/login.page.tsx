@@ -2,17 +2,17 @@ import type { SsoProviderKey } from '../auth.types';
 import { useConfig } from '@/modules/config/config.provider';
 import { useI18n } from '@/modules/i18n/i18n.provider';
 import { createForm } from '@/modules/shared/form/form';
-import { createVitrineUrl } from '@/modules/shared/utils/urls';
 import { Button } from '@/modules/ui/components/button';
 import { Checkbox, CheckboxControl, CheckboxLabel } from '@/modules/ui/components/checkbox';
 import { Separator } from '@/modules/ui/components/separator';
 import { TextField, TextFieldLabel, TextFieldRoot } from '@/modules/ui/components/textfield';
 import { A, useNavigate } from '@solidjs/router';
-import { type Component, createSignal, For } from 'solid-js';
+import { type Component, createSignal, For, Show } from 'solid-js';
 import * as v from 'valibot';
 import { getEnabledSsoProviderConfigs, isEmailVerificationRequiredError } from '../auth.models';
 import { signIn } from '../auth.services';
 import { AuthLayout } from '../components/auth-layout.component';
+import { AuthLegalLinks } from '../components/legal-links.component';
 import { SsoProviderButton } from '../components/sso-provider-button.component';
 
 export const EmailLoginForm: Component = () => {
@@ -107,6 +107,8 @@ export const LoginPage: Component = () => {
     await signIn.social({ provider: provider.key, callbackURL: config.baseUrl });
   };
 
+  const getHasSsoProviders = () => getEnabledSsoProviderConfigs({ config }).length > 0;
+
   return (
     <AuthLayout>
       <div class="flex items-center justify-center min-h-screen p-6 pb-18">
@@ -114,7 +116,7 @@ export const LoginPage: Component = () => {
           <h1 class="text-xl font-bold">{t('auth.login.title')}</h1>
           <p class="text-muted-foreground mt-1 mb-4">{t('auth.login.description')}</p>
 
-          {getShowEmailLogin()
+          {getShowEmailLogin() || !getHasSsoProviders()
             ? <EmailLoginForm />
             : (
                 <Button onClick={() => setShowEmailLogin(true)} class="w-full">
@@ -123,20 +125,22 @@ export const LoginPage: Component = () => {
                 </Button>
               )}
 
-          <Separator class="my-4" />
+          <Show when={getHasSsoProviders()}>
+            <Separator class="my-4" />
 
-          <div class="flex flex-col gap-2">
-            <For each={getEnabledSsoProviderConfigs({ config })}>
-              {provider => (
-                <SsoProviderButton
-                  name={provider.name}
-                  icon={provider.icon}
-                  onClick={() => loginWithProvider(provider)}
-                  label={t('auth.login.login-with-provider', { provider: provider.name })}
-                />
-              )}
-            </For>
-          </div>
+            <div class="flex flex-col gap-2">
+              <For each={getEnabledSsoProviderConfigs({ config })}>
+                {provider => (
+                  <SsoProviderButton
+                    name={provider.name}
+                    icon={provider.icon}
+                    onClick={() => loginWithProvider(provider)}
+                    label={t('auth.login.login-with-provider', { provider: provider.name })}
+                  />
+                )}
+              </For>
+            </div>
+          </Show>
 
           <p class="text-muted-foreground mt-4">
             {t('auth.login.no-account')}
@@ -146,16 +150,7 @@ export const LoginPage: Component = () => {
             </Button>
           </p>
 
-          <p class="text-muted-foreground mt-2">
-            By continuing, you acknowledge that you understand and agree to the
-            {' '}
-            <Button variant="link" as={A} class="inline px-0" href={createVitrineUrl({ path: 'terms-of-service' })}>Terms of Service</Button>
-            {' '}
-            and
-            {' '}
-            <Button variant="link" as={A} class="inline px-0" href={createVitrineUrl({ path: 'privacy-policy' })}>Privacy Policy</Button>
-            .
-          </p>
+          <AuthLegalLinks />
         </div>
       </div>
     </AuthLayout>

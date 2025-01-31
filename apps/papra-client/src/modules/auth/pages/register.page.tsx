@@ -1,15 +1,16 @@
+import type { ssoProviders } from '../auth.constants';
 import { useConfig } from '@/modules/config/config.provider';
 import { createForm } from '@/modules/shared/form/form';
-import { createVitrineUrl } from '@/modules/shared/utils/urls';
 import { Button } from '@/modules/ui/components/button';
 import { Separator } from '@/modules/ui/components/separator';
 import { TextField, TextFieldLabel, TextFieldRoot } from '@/modules/ui/components/textfield';
 import { A, useNavigate } from '@solidjs/router';
-import { type Component, createSignal, For } from 'solid-js';
+import { type Component, createSignal, For, Show } from 'solid-js';
 import * as v from 'valibot';
-import { ssoProviders } from '../auth.constants';
+import { getEnabledSsoProviderConfigs } from '../auth.models';
 import { signIn, signUp } from '../auth.services';
 import { AuthLayout } from '../components/auth-layout.component';
+import { AuthLegalLinks } from '../components/legal-links.component';
 import { SsoProviderButton } from '../components/sso-provider-button.component';
 
 export const EmailRegisterForm: Component = () => {
@@ -129,9 +130,11 @@ export const RegisterPage: Component = () => {
 
   const [getShowEmailRegister, setShowEmailRegister] = createSignal(false);
 
-  const loginWithProvider = async (provider: typeof ssoProviders[number]) => {
+  const registerWithProvider = async (provider: typeof ssoProviders[number]) => {
     await signIn.social({ provider: provider.key });
   };
+
+  const getHasSsoProviders = () => getEnabledSsoProviderConfigs({ config }).length > 0;
 
   return (
     <AuthLayout>
@@ -144,7 +147,7 @@ export const RegisterPage: Component = () => {
             Enter your email or use social login to create your Papra account.
           </p>
 
-          {getShowEmailRegister()
+          {getShowEmailRegister() || !getHasSsoProviders()
             ? <EmailRegisterForm />
             : (
                 <Button onClick={() => setShowEmailRegister(true)} class="w-full">
@@ -153,15 +156,17 @@ export const RegisterPage: Component = () => {
                 </Button>
               )}
 
-          <Separator class="my-4" />
+          <Show when={getHasSsoProviders()}>
+            <Separator class="my-4" />
 
-          <div class="flex flex-col gap-2">
-            <For each={ssoProviders}>
-              {provider => (
-                <SsoProviderButton name={provider.name} icon={provider.icon} onClick={() => loginWithProvider(provider)} label={`Register with ${provider.name}`} />
-              )}
-            </For>
-          </div>
+            <div class="flex flex-col gap-2">
+              <For each={getEnabledSsoProviderConfigs({ config })}>
+                {provider => (
+                  <SsoProviderButton name={provider.name} icon={provider.icon} onClick={() => registerWithProvider(provider)} label={`Register with ${provider.name}`} />
+                )}
+              </For>
+            </div>
+          </Show>
 
           <p class="text-muted-foreground mt-4">
             Already have an account?
@@ -171,16 +176,7 @@ export const RegisterPage: Component = () => {
             </Button>
           </p>
 
-          <p class="text-muted-foreground mt-2">
-            By continuing, you acknowledge that you understand and agree to the
-            {' '}
-            <Button variant="link" as={A} class="inline px-0" href={createVitrineUrl({ path: 'terms-of-service' })}>Terms of Service</Button>
-            {' '}
-            and
-            {' '}
-            <Button variant="link" as={A} class="inline px-0" href={createVitrineUrl({ path: 'privacy-policy' })}>Privacy Policy</Button>
-            .
-          </p>
+          <AuthLegalLinks />
         </div>
       </div>
     </AuthLayout>
