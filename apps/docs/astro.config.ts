@@ -3,10 +3,13 @@ import starlight from '@astrojs/starlight';
 import { defineConfig } from 'astro/config';
 import starlightThemeRapide from 'starlight-theme-rapide';
 import { sidebar } from './src/content/navigation';
+import posthogRawScript from './src/scripts/posthog.script.js?raw';
 
-const plausibleDomain = env.PLAUSIBLE_DOMAIN;
-const plausibleScriptSrc = env.PLAUSIBLE_SCRIPT_SRC;
-const isPlausibleEnabled = plausibleDomain && plausibleScriptSrc;
+const posthogApiKey = env.POSTHOG_API_KEY;
+const posthogApiHost = env.POSTHOG_API_HOST ?? 'https://eu.i.posthog.com';
+const isPosthogEnabled = Boolean(posthogApiKey);
+
+const posthogScript = posthogRawScript.replace('[POSTHOG-API-KEY]', posthogApiKey ?? '').replace('[POSTHOG-API-HOST]', posthogApiHost);
 
 // https://astro.build/config
 export default defineConfig({
@@ -21,8 +24,9 @@ export default defineConfig({
         alt: 'Papra Logo',
       },
       social: {
-        blueSky: 'https://bsky.app/profile/papra.app',
         github: 'https://github.com/papra-hq/papra',
+        blueSky: 'https://bsky.app/profile/papra.app',
+        discord: 'https://discord.gg/8UPjzsrBNF',
       },
       editLink: {
         baseUrl: 'https://github.com/papra-hq/papra/edit/main/apps/docs/',
@@ -39,15 +43,11 @@ export default defineConfig({
             sizes: '32x32',
           },
         },
-        ...(isPlausibleEnabled
+        ...(isPosthogEnabled
           ? [
               {
                 tag: 'script',
-                attrs: {
-                  'defer': true,
-                  'data-domain': plausibleDomain,
-                  'src': plausibleScriptSrc,
-                },
+                content: posthogScript,
               } as const,
             ]
           : []),

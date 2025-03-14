@@ -1,4 +1,6 @@
-export const sidebar = [
+import type { StarlightUserConfig } from '@astrojs/starlight/types';
+
+export const sidebar: StarlightUserConfig['sidebar'] = [
   {
     label: 'Getting Started',
     items: [
@@ -20,7 +22,6 @@ export const sidebar = [
         label: 'Setup intake emails',
         slug: 'guides/intake-emails-with-cloudflare-email-workers',
       },
-
     ],
   },
 ];
