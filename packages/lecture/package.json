@@ -1,27 +1,28 @@
 {
-  "name": "@papra/api-sdk",
+  "name": "@papra/lecture",
   "type": "module",
-  "version": "1.0.1",
-  "packageManager": "pnpm@10.12.3",
-  "description": "Api SDK for Papra, the document archiving platform.",
+  "version": "0.0.7",
+  "packageManager": "pnpm@9.15.0",
+  "description": "A simple library to extract text from files",
   "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
-  "license": "AGPL-3.0-or-later",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/papra-hq/papra",
-    "directory": "packages/api-sdk"
+    "directory": "packages/lecture"
   },
   "bugs": {
     "url": "https://github.com/papra-hq/papra/issues"
   },
   "keywords": [
-    "papra",
-    "api",
-    "sdk",
+    "file",
+    "text",
+    "extract",
+    "lecture",
     "document",
-    "archiving",
-    "storage"
+    "content"
   ],
+  "sideEffects": false,
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
@@ -38,18 +39,26 @@
     "lint:fix": "eslint --fix .",
     "test": "vitest run",
     "test:watch": "vitest watch",
+    "generate-fixtures": "vitest --update",
+    "prepare": "pnpm run build",
+    "build": "unbuild",
     "typecheck": "tsc --noEmit",
-    "build": "unbuild"
+    "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@corentinth/chisels": "^1.3.0",
-    "ofetch": "^1.4.1"
+    "@corentinth/chisels": "^1.3.1",
+    "tesseract.js": "^6.0.0",
+    "unpdf": "^0.12.1"
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:",
+    "@types/node": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
     "eslint": "catalog:",
+    "mime": "^4.0.6",
+    "tinyglobby": "^0.2.10",
     "typescript": "catalog:",
-    "unbuild": "^3.5.0",
+    "unbuild": "^3.3.1",
     "vitest": "catalog:"
   }
 }
