@@ -1,4 +1,4 @@
-name: CI - Lib
+name: CI - Lecture
 
 on:
   pull_request:
@@ -7,20 +7,26 @@ on:
       - main
 
 jobs:
-  ci-lib:
-    name: CI - Lib
+  ci-packages-lecture:
+    name: CI - Lecture
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/lecture
 
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-      - run: corepack enable
+      
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: pnpm
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm i --frozen-lockfile
+        run: pnpm i
 
       - name: Run linters
         run: pnpm lint
@@ -31,5 +37,5 @@ jobs:
       - name: Run unit test
         run: pnpm test
 
-      - name: Build the lib
+      - name: Build the app
         run: pnpm build
