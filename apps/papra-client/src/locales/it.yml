@@ -1,0 +1,75 @@
+# Autenticazione
+
+auth.request-password-reset.title: Reimposta la tua password
+auth.request-password-reset.description: Inserisci la tua email per reimpostare la password.
+auth.request-password-reset.requested: Se esiste un account associato a questa email, ti abbiamo inviato un'email per reimpostare la password.
+auth.request-password-reset.back-to-login: Torna al login
+auth.request-password-reset.form.email.label: Email
+auth.request-password-reset.form.email.placeholder: 'Esempio: ada@papra.app'
+auth.request-password-reset.form.email.required: Inserisci il tuo indirizzo email
+auth.request-password-reset.form.email.invalid: Questo indirizzo email non è valido
+auth.request-password-reset.form.submit: Richiedi reimpostazione password
+
+auth.reset-password.title: Reimposta la tua password
+auth.reset-password.description: Inserisci la nuova password per completare la reimpostazione.
+auth.reset-password.reset: La tua password è stata reimpostata.
+auth.reset-password.back-to-login: Torna al login
+auth.reset-password.form.new-password.label: Nuova password
+auth.reset-password.form.new-password.placeholder: 'Esempio: **********'
+auth.reset-password.form.new-password.required: Inserisci la nuova password
+auth.reset-password.form.new-password.min-length: La password deve contenere almeno {{ minLength }} caratteri
+auth.reset-password.form.new-password.max-length: La password deve contenere meno di {{ maxLength }} caratteri
+auth.reset-password.form.submit: Reimposta password
+
+auth.email-provider.open: Apri {{ provider }}
+
+auth.login.title: Accedi a Papra
+auth.login.description: Inserisci la tua email o usa l'accesso social per entrare nel tuo account Papra.
+auth.login.login-with-provider: Accedi con {{ provider }}
+auth.login.no-account: Non hai un account?
+auth.login.register: Registrati
+auth.login.form.email.label: Email
+auth.login.form.email.placeholder: 'Esempio: ada@papra.app'
+auth.login.form.email.required: Inserisci il tuo indirizzo email
+auth.login.form.email.invalid: Questo indirizzo email non è valido
+auth.login.form.password.label: Password
+auth.login.form.password.placeholder: Imposta una password
+auth.login.form.password.required: Inserisci la tua password
+auth.login.form.remember-me.label: Ricordami
+auth.login.form.forgot-password.label: Password dimenticata?
+auth.login.form.submit: Accedi
+
+auth.register.title: Registrati a Papra
+auth.register.description: Crea un account per iniziare a usare Papra.
+auth.register.register-with-email: Registrati con email
+auth.register.register-with-provider: Registrati con {{ provider }}
+auth.register.providers.google: Google
+auth.register.providers.github: GitHub
+auth.register.have-account: Hai già un account?
+auth.register.login: Accedi
+auth.register.registration-disabled.title: Registrazione disabilitata
+auth.register.registration-disabled.description: La creazione di nuovi account è attualmente disabilitata su questa istanza di Papra. Solo gli utenti con account esistenti possono accedere. Se pensi che si tratti di un errore, contatta l'amministratore dell'istanza.
+auth.register.form.email.label: Email
+auth.register.form.email.placeholder: 'Esempio: ada@papra.app'
+auth.register.form.email.required: Inserisci il tuo indirizzo email
+auth.register.form.email.invalid: Questo indirizzo email non è valido
+auth.register.form.password.label: Password
+auth.register.form.password.placeholder: Imposta una password
+auth.register.form.password.required: Inserisci la tua password
+auth.register.form.password.min-length: La password deve contenere almeno {{ minLength }} caratteri
+auth.register.form.password.max-length: La password deve contenere meno di {{ maxLength }} caratteri
+auth.register.form.name.label: Nome
+auth.register.form.name.placeholder: 'Esempio: Ada Lovelace'
+auth.register.form.name.required: Inserisci il tuo nome
+auth.register.form.name.max-length: Il nome deve contenere meno di {{ maxLength }} caratteri
+auth.register.form.submit: Registrati
+
+auth.email-validation-required.title: Verifica la tua email
+auth.email-validation-required.description: È stata inviata un'email di verifica al tuo indirizzo. Verifica la tua email cliccando sul link ricevuto.
+
+auth.legal-links.description: Continuando, confermi di aver compreso e accettato i {{ terms }} e la {{ privacy }}.
+auth.legal-links.terms: Termini di servizio
+auth.legal-links.privacy: Informativa sulla privacy
+
+auth.no-auth-provider.title: Nessun provider di autenticazione
+auth.no-auth-provider.description: Non ci sono provider di autenticazione abilitati su questa istanza di Papra. Contatta l'amministratore per abilitarli.
